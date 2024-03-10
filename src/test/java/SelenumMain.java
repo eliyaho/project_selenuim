@@ -24,10 +24,16 @@ public class SelenumMain {
     public static void teststeps(WebDriver driver) {
 
         SelenumLink seleniumLinks = new SelenumLink(driver);
-        List<LinkInfo> links = seleniumLinks.getLinks();
+        List<SeleniumLinkInfo> links = seleniumLinks.getLinks();
         seleniumLinks.printLinks(links);
 
+        //change to return
         SubCategory subCategory = new SubCategory(driver);
         subCategory.processLinks(links);
+
+
+//        SubSubCategory  subsubCategory = new SubSubCategory(driver);
+//        List<SubCategory.LinkInfo> Slinks = subsubCategory.getLinks();
+//        subsubCategory.processLinks(Slinks);
     }
 }

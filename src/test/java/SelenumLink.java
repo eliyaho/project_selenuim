@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import DB.InsertData;
-
 
 public class SelenumLink {
     private WebDriver driver;
@@ -16,30 +14,42 @@ public class SelenumLink {
         this.driver = driver;
     }
 
-    public List<LinkInfo> getLinks() {
-        List<LinkInfo> links = new ArrayList<>();
+    public List<SeleniumLinkInfo> getLinks() {
+        List<SeleniumLinkInfo> links = new ArrayList<>();
         List<WebElement> linkElements = driver.findElements(By.xpath("//*[@id=\"designbox_1639\"]/div/div[2]/ul/li/a"));
 
         for (WebElement linkElement : linkElements) {
             String name = linkElement.getText();
             String href = linkElement.getAttribute("href");
-            links.add(new LinkInfo(name, href));
+            links.add(new SeleniumLinkInfo(name, href));
         }
-
         return links;
     }
 
-    public void printLinks(List<LinkInfo> links) {
-        for (LinkInfo link : links) {
+    public void printLinks(List<SeleniumLinkInfo> links) {
+        CreateTable.createMainTable("main");
+        for (SeleniumLinkInfo link : links) {
             System.out.println("Name: " + link.getName());
             System.out.println("Link: " + link.getHref());
-
-            // יצירת טבלה במסד הנתונים עבור כל שורה ברשימת הלינקים
-            CreateTable.createTable(link.getName());
-
-//            InsertData.insertData(link.getName(), link.getHref());
+            CreateTable.insertDataIntoMainTable("main", link.getName(), link.getHref());
         }
     }
+}
 
+class SeleniumLinkInfo {
+    private String name;
+    private String href;
 
+    public SeleniumLinkInfo(String name, String href) {
+        this.name = name;
+        this.href = href;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHref() {
+        return href;
+    }
 }
